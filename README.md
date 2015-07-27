@@ -120,3 +120,49 @@ and follow the instructions above
 11) Test the application 
 
 	http://192.168.56.120
+
+
+## How to set up a development environment from an existing box
+
+#### Create a package from a box
+
+	vagrant halt
+	vagrant package
+
+Creates a ``package.box``
+
+#### Create a new VM from the new box
+
+1) Add the box to virtualbox 
+
+	vagrant box add --name <name-of-the-box> <path-to-package.box> --provider virtualbox
+	vagrant box list # to check if the box is listed
+
+2) Create the folder ``dev`` and cd into it
+
+	mkdir dev
+	cd dev
+
+3) Clone the ``proxy-build`` repository, and cd into the folder	
+
+		git clone git@github.com:dimosthe/proxy-build.git 
+		cd proxy-build    
+
+4) Change the name of the box (as specified in (1)) in ``Vagrantfile`` 
+
+	config.vm.box = "<name-of-the-box>"
+
+5) Create the folder ``shared``
+
+		mkdir shared
+
+This folder will expose some application files and folders to the host filesystem.
+
+6) Create and run the VM
+
+		vagrant up
+
+Once this command finishes, the VM is up and running. Our user is ``vagrant`` and password ``vagrant``. The VM is bound to the local IP ``192.168.56.120``.
+
+7) Now you can use command ``vagrant ssh`` to SSH into the VM, without providing any password.
+	
