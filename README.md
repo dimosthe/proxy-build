@@ -54,6 +54,7 @@ Once this command finishes, the VM is up and running. Our user is ``vagrant`` an
 #### Deploy apache2 web server, MySql server and build the Dashboard application
 
 1) Install necessary packages
+	
 	* apache2
 	* mysql-server-5.5
 	* git
@@ -67,6 +68,7 @@ Once this command finishes, the VM is up and running. Our user is ``vagrant`` an
 	* libapache2-mod-php5
 
 2) [Generate SSH keys](https://help.github.com/articles/generating-ssh-keys/) for the user ``proxyvnf`` in order to use the ``Squid-dashboard`` repository. Firstly change to user ``proxyvnf`` 
+	
 	sudo -u proxyvnf -s 
 
 and follow the instructions above
