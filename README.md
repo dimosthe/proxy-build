@@ -97,7 +97,7 @@ and follow the instructions above
 	cd /var/www/html
 	sudo ln -s /home/proxyvnf/dashboard/Squid-dashboard/ dashboard
 
-9) Set document root to be "/var/www/html/dashboard/web"
+9) Set document root to be ``/var/www/html/dashboard/web``
 
 	sudo vim /etc/apache2/sites-available/000-default.conf
 	DocumentRoot "/var/www/html/dashboard/web" 
