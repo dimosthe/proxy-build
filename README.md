@@ -76,4 +76,47 @@ and follow the instructions above
 3) Clone the ``Squid-dashboard``
 	
 	cd /home/proxyvnf/dashboard
-	git clone git@github.com:dimosthe/Squid-dashboard.git 
+	git clone git@github.com:dimosthe/Squid-dashboard.git
+
+4) Install Composer
+
+	curl -s http://getcomposer.org/installer | php
+	sudo mv composer.phar /usr/local/bin/composer
+
+5) Run ``composer global require "fxp/composer-asset-plugin:1.0.0-beta3"``. Installs the composer asset plugin which allows managing bower and npm package dependencies through Composer. You only need to run this command once for all.
+
+6) Run ``composer install`` in the root directory of the ``Squid-dashboard`` application in order to install dependencies. This will create the vendor directory with all package dependencies inlcuding the yii core source code.
+	
+7) Enable apache rewrite module
+	
+	sudo a2enmod rewrite
+	sudo service apache2 restart
+	
+8) Create a symlink to point to the ``Squid-dashboard`` application
+
+	cd /var/www/html
+	sudo ln -s /home/proxyvnf/dashboard/Squid-dashboard/ dashboard
+
+9) Set document root to be "/var/www/html/dashboard/web"
+
+	sudo vim /etc/apache2/sites-available/000-default.conf
+	DocumentRoot "/var/www/html/dashboard/web" 
+
+10) Hide ``index.php`` from the url
+
+	sudo vim /etc/apache2/apache2.conf
+	<Directory "/var/www/html/dashboard/web">
+		# use mod_rewrite for pretty URL support
+		RewriteEngine on
+		# If a directory or a file exists, use the request directly
+		RewriteCond %{REQUEST_FILENAME} !-f
+		RewriteCond %{REQUEST_FILENAME} !-d
+		# Otherwise forward the request to index.php
+		RewriteRule . index.php
+
+		# ...other settings...
+	</Directory>
+
+11) Test the application 
+
+	http://192.168.56.120
