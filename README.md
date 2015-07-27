@@ -50,3 +50,28 @@ For the rest of the documentation, we'll assume that the IP is ``192.168.56.120`
 Once this command finishes, the VM is up and running. Our user is ``vagrant`` and password ``vagrant``. The VM is bound to the local IP ``192.168.56.120``.
 
 6) Now you can use command ``vagrant ssh`` to SSH into the VM, without providing any password.
+
+#### Deploy apache2 web server, MySql server and build the Dashboard application
+
+1) Install necessary packages
+	* apache2
+	* mysql-server-5.5
+	* git
+	* curl
+	* php5
+	* php5-curl
+	* php5-intl
+	* php5-mcrypt
+	* php5-mysql
+	* php5-imagick
+	* libapache2-mod-php5
+
+2) [Generate SSH keys](https://help.github.com/articles/generating-ssh-keys/) for the user ``proxyvnf`` in order to use the ``Squid-dashboard`` repository. Firstly change to user ``proxyvnf`` 
+	sudo -u proxyvnf -s 
+
+and follow the instructions above
+
+3) Clone the ``Squid-dashboard``
+	
+	cd /home/proxyvnf/dashboard
+	git clone git@github.com:dimosthe/Squid-dashboard.git 
