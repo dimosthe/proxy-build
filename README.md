@@ -133,9 +133,9 @@ Creates a ``package.box``
 
 #### Create a new VM from the new box
 
-1) Add the box to virtualbox 
+1) Add the box to Vagrant in order to be able to build VMs from it 
 
-	vagrant box add --name <name-of-the-box> <path-to-package.box> --provider virtualbox
+	vagrant box add <name-of-the-box> <path-to-package.box>
 	vagrant box list # to check if the box is listed
 
 2) Create the folder ``dev`` and cd into it
@@ -165,4 +165,18 @@ This folder will expose some application files and folders to the host filesyste
 Once this command finishes, the VM is up and running. Our user is ``vagrant`` and password ``vagrant``. The VM is bound to the local IP ``192.168.56.120``.
 
 7) Now you can use command ``vagrant ssh`` to SSH into the VM, without providing any password.
-	
+
+8) There is an issue with the synced folder. The content is lost after deploying the VM so we need to clone the ``Squid-dashboard`` application again
+
+	sudo -u proxyvnf -s 
+	# generate ssh keys and add the public key to your git profile
+	cd /home/proxyvnf/dashboard
+	git clone git@github.com:dimosthe/Squid-dashboard.git
+	cd Squid-dashboard
+	composer install
+
+9) Test the application 
+
+	http://192.168.56.120
+
+
