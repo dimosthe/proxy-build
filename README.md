@@ -10,8 +10,8 @@ It deploys an ubuntu 14.04 server on which the Squid proxy and the dashboard wil
 	* [Vagrant](http://docs.vagrantup.com/v2/installation/)
 	* Install Vagrant plugins ``vagrant-useradd`` and ``vagrant-vbguest``
 					      
-			vagrant plugin install vagrant-useradd
-			vagrant plugin install vagrant-vbguest
+			sudo vagrant plugin install vagrant-useradd
+			sudo vagrant plugin install vagrant-vbguest
 																			
 	The ``vagrant-useradd`` plugin enables Vagrant to create users in the VM, before setting up file sharing.
 
@@ -179,4 +179,34 @@ Once this command finishes, the VM is up and running. Our user is ``vagrant`` an
 
 	http://192.168.56.120
 
+## Deploy Squid 3.5
+
+We build Squid 3.5.5 from source code
+
+#### Requirements
+
+	* g++
+	* make
+	* autoconf
+
+#### Deploy Squid 3.5.5
+
+1) Download source code, extract and cd into it
+
+2) Run 
+
+	./configure --prefix=/usr --localstatedir=/var
+	--libexecdir=${prefix}/lib/squid --srcdir=. --datadir=${prefix}/share/squid
+	--sysconfdir=/etc/squid --with-default-user=proxy --with-logdir=/var/log/squid
+	--with-pidfile=/var/run/squid.pid --enable-delay-pools
+	--enable-auth-basic=DB,NCSA --enable-cache-digests
+
+	make
+	make install
+
+3) [Build](https://gist.github.com/e7d/1f784339df82c57a43bf#build-service-runtime) ``service squid start``. 
+
+4) Run
+
+	service squid start
 
