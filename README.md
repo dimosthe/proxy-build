@@ -169,7 +169,7 @@ Once this command finishes, the VM is up and running. Our user is ``vagrant`` an
 8) There is an issue with the synced folder. The content is lost after deploying the VM so we need to clone the ``Squid-dashboard`` application again
 
 	sudo -u proxyvnf -s 
-	# generate ssh keys and add the public key to your git profile
+	# [Generate SSH keys](https://help.github.com/articles/generating-ssh-keys/) and add the public key to your git profile
 	cd /home/proxyvnf/dashboard
 	git clone git@github.com:dimosthe/Squid-dashboard.git
 	cd Squid-dashboard
