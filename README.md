@@ -1,7 +1,7 @@
 # proxy-build
 vagrant configuration file for proxy vnf development environment. 
 
-It deploys an ubuntu 14.04 server on which the Squid proxy and the dashboard will run.
+It deploys an ubuntu 14.04 server and builds a Squid proxy and a dashboard on it.
 
 ## Host machine requirements
 
@@ -188,6 +188,7 @@ We build Squid 3.5.5 from source code
 	* g++
 	* make
 	* autoconf
+	* apache2-utils
 
 #### Deploy Squid 3.5.5
 
@@ -210,3 +211,15 @@ We build Squid 3.5.5 from source code
 
 	service squid start
 
+## Deploy SquidGuard
+
+1) Install squidguard
+
+	sudo apt-get install squidguard
+
+2) The problem is that squid3 is also installed when running the above command and starts on start-up. In order to disable the service on sstart-up:
+
+	cd /etc/init/
+	sudo vim squid3.conf
+	comment #start on runlevel [2345]
+	sudo reboot
