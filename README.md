@@ -1,7 +1,7 @@
 # proxy-build
 vagrant configuration file for proxy vnf development environment. 
 
-It deploys an ubuntu 14.04 server and builds a Squid proxy and a dashboard on it.
+It deploys an ubuntu 14.04 server and builds a Squid proxy, SquidGuard and a dashboard on it.
 
 ## Host machine requirements
 
