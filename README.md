@@ -196,6 +196,7 @@ Once this command finishes, the VM is up and running. Our user is ``vagrant`` an
 	vim config/db.php // edit the file accordingly
 	sudo -u proxyvnf -s
 	php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations // in 	order to build the tables for the yii2-user module
+	./yii migrate/up // in order to build any extra migrations
 
 10) Test the application 
 
