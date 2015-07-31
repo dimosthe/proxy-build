@@ -88,6 +88,7 @@ and follow the instructions above
 	mkdir migrations // from the root of the application
 	sudo -u proxyvnf -s
 	php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations // in order to build the tables for the yii2-user module
+	./yii createusers/create // from the root of the application. It creates a default user with username:admin, pass:administrator
 
 5) Install Composer
 
@@ -185,8 +186,18 @@ Once this command finishes, the VM is up and running. Our user is ``vagrant`` an
 	git clone git@github.com:dimosthe/Squid-dashboard.git
 	cd Squid-dashboard
 	composer install
+	
+9) Create a new database, a new user and install the yii2-user plugin
+	
+	mysql -u root -p
+	create database dashboarddb
+	create user 'dashboarduser'@'localhost' identified by '12345678';
+	grant all privileges on dashboarddb.* to dashboarduser@localhost;
+	vim config/db.php // edit the file accordingly
+	sudo -u proxyvnf -s
+	php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations // in 	order to build the tables for the yii2-user module
 
-9) Test the application 
+10) Test the application 
 
 	http://192.168.56.120
 
