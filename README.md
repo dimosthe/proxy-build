@@ -197,6 +197,7 @@ Once this command finishes, the VM is up and running. Our user is ``vagrant`` an
 	sudo -u proxyvnf -s
 	php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations // in 	order to build the tables for the yii2-user module
 	./yii migrate/up // in order to build any extra migrations
+	./yii createusers/create // from the root of the application. It creates a default user with username:admin, pass:administrator
 
 10) Test the application 
 
