@@ -129,7 +129,14 @@ and follow the instructions above
 		# ...other settings...
 	</Directory>
 
-12) Test the application 
+12) Allow apache2 to run sudo without providing password. This is usefull when
+execute commands on Squid via the dashboard
+
+	sudo touch /etc/sudoers.d/www-data
+	sudo vim /etc/sudoers.d/www-data
+	www-data ALL=(ALL) NOPASSWD:ALL // add this line in the file
+
+13) Test the application 
 
 	http://192.168.56.120
 
