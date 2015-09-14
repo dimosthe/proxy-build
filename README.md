@@ -231,7 +231,7 @@ We build Squid 3.5.5 from source code
 	--libexecdir=${prefix}/lib/squid --srcdir=. --datadir=${prefix}/share/squid
 	--sysconfdir=/etc/squid --with-default-user=proxy --with-logdir=/var/log/squid
 	--with-pidfile=/var/run/squid.pid --enable-delay-pools
-	--enable-auth-basic=DB,NCSA --enable-cache-digests
+	--enable-auth-basic=DB,NCSA --enable-cache-digests --disable-arch-native
 
 	make
 	make install
