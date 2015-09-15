@@ -254,3 +254,7 @@ We build Squid 3.5.5 from source code
 	sudo vim squid3.conf
 	comment #start on runlevel [2345]
 	sudo reboot
+
+## How to migrate a Virtualbox machine to VMware Esxi
+
+[link](https://felixcentmerino.wordpress.com/2014/10/15/migrate-virtual-machine-from-oracle-virtualbox-to-esxi-5-5/)
