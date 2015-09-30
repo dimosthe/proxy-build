@@ -255,6 +255,15 @@ We build Squid 3.5.5 from source code
 	comment #start on runlevel [2345]
 	sudo reboot
 
+3) Initializing the blacklists
+
+	sudo squidGuard -C all # convert them from the textfiles to db files
+	sudo chown -R proxy:proxy /etc/squidguard/blacklists/* # ensures that squid is able to access the blacklists
+
+4) Configuring Squid
+
+	redirect_program /usr/bin/squidGuard -c /etc/squidguard/squidGuard.conf # at the beginning of squid.conf
+
 ## How to migrate a Virtualbox machine to VMware Esxi
 
 [link](https://felixcentmerino.wordpress.com/2014/10/15/migrate-virtual-machine-from-oracle-virtualbox-to-esxi-5-5/)
