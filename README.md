@@ -85,10 +85,6 @@ and follow the instructions above
 	create user 'dashboarduser'@'localhost' identified by 'primetel';
 	grant all privileges on dashboarddb.* to dashboarduser@localhost;
 	vim config/db.php // edit the file accordingly
-	mkdir migrations // from the root of the application
-	sudo -u proxyvnf -s
-	php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations // in order to build the tables for the yii2-user module
-	./yii createusers/create // from the root of the application. It creates a default user with username:admin, pass:administrator
 
 5) Install Composer
 
@@ -98,23 +94,32 @@ and follow the instructions above
 6) Run ``composer global require "fxp/composer-asset-plugin:~1.1.0"``. Installs the composer asset plugin which allows managing bower and npm package dependencies through Composer. You only need to run this command once for all.
 
 7) Run ``composer install`` in the root directory of the ``Squid-dashboard`` application in order to install dependencies. This will create the vendor directory with all package dependencies inlcuding the yii core source code.
+
+8) Install Squid 3.5.5 and SquidGuard (see intructions at the end of the page)
+
+9) Install migrations. Run the following commands from the application's root directory
+
+	sudo -u proxyvnf -s
+	php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations // in order to build the tables for the yii2-user module
+	./yii createusers/create // from the root of the application. It creates a default user with username:admin, pass:administrator
+	./yii migrate // to install other migrations
 	
-8) Enable apache rewrite module
+10) Enable apache rewrite module
 	
 	sudo a2enmod rewrite
 	sudo service apache2 restart
 	
-9) Create a symlink to point to the ``Squid-dashboard`` application
+11) Create a symlink to point to the ``Squid-dashboard`` application
 
 	cd /var/www/html
 	sudo ln -s /home/proxyvnf/dashboard/Squid-dashboard/ dashboard
 
-10) Set document root to be ``/var/www/html/dashboard/web``
+12) Set document root to be ``/var/www/html/dashboard/web``
 
 	sudo vim /etc/apache2/sites-available/000-default.conf
 	DocumentRoot "/var/www/html/dashboard/web" 
 
-11) Hide ``index.php`` from the url
+13) Hide ``index.php`` from the url
 
 	sudo vim /etc/apache2/apache2.conf
 	<Directory "/var/www/html/dashboard/web">
@@ -129,14 +134,14 @@ and follow the instructions above
 		# ...other settings...
 	</Directory>
 
-12) Allow apache2 to run sudo without providing password. This is usefull when
+14) Allow apache2 to run sudo without providing password. This is usefull when
 execute commands on Squid via the dashboard
 
 	sudo touch /etc/sudoers.d/www-data
 	sudo vim /etc/sudoers.d/www-data
 	www-data ALL=(ALL) NOPASSWD:ALL // add this line in the file
 
-13) Test the application 
+15) Test the application 
 
 	http://192.168.56.120
 
