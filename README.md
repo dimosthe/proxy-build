@@ -82,7 +82,7 @@ and follow the instructions above
 
 	mysql -u root -p
 	create database dashboarddb
-	create user 'dashboarduser'@'localhost' identified by '12345678';
+	create user 'dashboarduser'@'localhost' identified by 'primetel';
 	grant all privileges on dashboarddb.* to dashboarduser@localhost;
 	vim config/db.php // edit the file accordingly
 	mkdir migrations // from the root of the application
