@@ -95,7 +95,7 @@ and follow the instructions above
 	curl -s http://getcomposer.org/installer | php
 	sudo mv composer.phar /usr/local/bin/composer
 
-6) Run ``composer global require "fxp/composer-asset-plugin:1.0.0-beta3"``. Installs the composer asset plugin which allows managing bower and npm package dependencies through Composer. You only need to run this command once for all.
+6) Run ``composer global require "fxp/composer-asset-plugin:~1.1.0"``. Installs the composer asset plugin which allows managing bower and npm package dependencies through Composer. You only need to run this command once for all.
 
 7) Run ``composer install`` in the root directory of the ``Squid-dashboard`` application in order to install dependencies. This will create the vendor directory with all package dependencies inlcuding the yii core source code.
 	
