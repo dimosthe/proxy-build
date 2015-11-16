@@ -1,7 +1,9 @@
 # ProXy as a Service (PXaaS) Virtual Network Function 
 Vagrant configuration file for PXaaS vnf development environment for [T-NOVA](http://t-nova.eu/) project.  
 
-It deploys an ubuntu 14.04 server and builds a Squid proxy, SquidGuard and a [Dashboard](https://github.com/dimosthe/Squid-dashboard) on it.
+It deploys an ubuntu 14.04 server and builds a [Squid proxy](http://www.squid-cache.org/), [SquidGuard](http://www.squidguard.org/index.html) and a [Dashboard](https://github.com/dimosthe/Squid-dashboard) on it.
+
+The idea behind PXaaS vnf is to enables a user, who acts as the network administrator of his LAN, to configure the Squid Proxy on demand and provide Proxy services such as web caching, web access control, website filtering and user anonymity to the LAN's users. 
 
 ## Host machine requirements
 
