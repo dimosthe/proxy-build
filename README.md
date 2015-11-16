@@ -247,17 +247,17 @@ We build Squid 3.5.5 from source code
 
 	service squid start
 
+5) Add ``basic_db_auth`` plugin under /usr/lib/squid3 directory
+
 ## Deploy SquidGuard
 
 1) Install squidguard
 
 	sudo apt-get install squidguard
 
-2) The problem is that squid3 is also installed when running the above command and starts on start-up. In order to disable the service on sstart-up:
+2) The problem is that squid3 is also installed when running the above command and starts on start-up. In order to disable the service on start-up:
 
-	cd /etc/init/
-	sudo vim squid3.conf
-	comment #start on runlevel [2345]
+	sudo update-rc.d -f  squid3 remove
 	sudo reboot
 
 3) Initializing the blacklists
