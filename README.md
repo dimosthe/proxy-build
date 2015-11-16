@@ -1,7 +1,7 @@
-# proxy-build
-vagrant configuration file for proxy vnf development environment. 
+# ProXy as a Service (PXaaS) Virtual Network Function 
+Vagrant configuration file for PXaaS vnf development environment for [T-NOVA](http://t-nova.eu/) project.  
 
-It deploys an ubuntu 14.04 server and builds a Squid proxy, SquidGuard and a dashboard on it.
+It deploys an ubuntu 14.04 server and builds a Squid proxy, SquidGuard and a [Dashboard](https://github.com/dimosthe/Squid-dashboard) on it.
 
 ## Host machine requirements
 
