@@ -233,11 +233,12 @@ We build Squid 3.5.5 from source code
 
 3) [Build](https://gist.github.com/e7d/1f784339df82c57a43bf#build-service-runtime) ``service squid start``. 
 
-4) Run
+4) Add ``basic_db_auth`` plugin under /usr/lib/squid3 directory # it is used for authentication
+
+5) Run
 
 	service squid start
 
-5) Add ``basic_db_auth`` plugin under /usr/lib/squid3 directory
 
 ## Deploy SquidGuard
 
