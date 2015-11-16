@@ -80,11 +80,11 @@ and follow the instructions above
 	cd /home/proxyvnf/dashboard
 	git clone git@github.com:dimosthe/Squid-dashboard.git
 
-4) Create a new database and a new user and the yii2-user module
+4) Create a new database and a new user
 
 	mysql -u root -p
 	create database dashboarddb
-	create user 'dashboarduser'@'localhost' identified by 'primetel';
+	create user 'dashboarduser'@'localhost' identified by '12345678';
 	grant all privileges on dashboarddb.* to dashboarduser@localhost;
 	vim config/db.php // edit the file accordingly
 
@@ -200,20 +200,8 @@ Once this command finishes, the VM is up and running. Our user is ``vagrant`` an
 	git clone git@github.com:dimosthe/Squid-dashboard.git
 	cd Squid-dashboard
 	composer install
-	
-9) Create a new database, a new user and install the yii2-user plugin
-	
-	mysql -u root -p
-	create database dashboarddb
-	create user 'dashboarduser'@'localhost' identified by '12345678';
-	grant all privileges on dashboarddb.* to dashboarduser@localhost;
-	vim config/db.php // edit the file accordingly
-	sudo -u proxyvnf -s
-	php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations // in 	order to build the tables for the yii2-user module
-	./yii migrate/up // in order to build any extra migrations
-	./yii createusers/create // from the root of the application. It creates a default user with username:admin, pass:administrator
 
-10) Test the application 
+9) Test the application 
 
 	http://192.168.56.120
 
@@ -241,7 +229,7 @@ We build Squid 3.5.5 from source code
 	--enable-auth-basic=DB,NCSA --enable-cache-digests --disable-arch-native
 
 	make
-	make install
+	sudo make install
 
 3) [Build](https://gist.github.com/e7d/1f784339df82c57a43bf#build-service-runtime) ``service squid start``. 
 
@@ -262,12 +250,14 @@ We build Squid 3.5.5 from source code
 	sudo update-rc.d -f  squid3 remove
 	sudo reboot
 
-3) Initializing the blacklists
+3) [Download blacklists](http://urlblacklist.com/?sec=download) 
+
+4) Initializing the blacklists
 
 	sudo squidGuard -C all # convert them from the textfiles to db files. Note that only domains that are defined in the configuration file will be converted
 	sudo chown -R proxy:proxy /etc/squidguard/blacklists/* # ensures that squid is able to access the blacklists
 
-4) Configuring Squid
+5) Configuring Squid
 
 	redirect_program /usr/bin/squidGuard -c /etc/squidguard/squidGuard.conf # at the beginning of squid.conf
 
