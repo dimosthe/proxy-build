@@ -262,7 +262,7 @@ We build Squid 3.5.5 from source code
 
 3) Initializing the blacklists
 
-	sudo squidGuard -C all # convert them from the textfiles to db files. Note that squidGuard must be running
+	sudo squidGuard -C all # convert them from the textfiles to db files. Note that only domains that are defined in the configuration file will be converted
 	sudo chown -R proxy:proxy /etc/squidguard/blacklists/* # ensures that squid is able to access the blacklists
 
 4) Configuring Squid
