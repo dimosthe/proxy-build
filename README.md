@@ -262,6 +262,9 @@ We build Squid 3.5.5 from source code
 
 	redirect_program /usr/bin/squidGuard -c /etc/squidguard/squidGuard.conf # at the beginning of squid.conf
 
-## How to migrate a Virtualbox machine to VMware Esxi
+## How to migrate a Virtualbox machine to OpenStack
 
-[link](https://felixcentmerino.wordpress.com/2014/10/15/migrate-virtual-machine-from-oracle-virtualbox-to-esxi-5-5/)
+	# [optional] Convert vmdk to qcow2
+	qemu-img convert -f vmdk -O qcow2 image.vmdk image.qcow2
+	# Unistall VirtualBox GuestAdditions 
+	sudo /opt/[VboxAddonsFolder]/uninstall.sh
