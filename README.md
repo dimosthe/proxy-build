@@ -68,6 +68,7 @@ Once this command finishes, the VM is up and running. Our user is ``vagrant`` an
 	* php5-mysql
 	* php5-imagick
 	* libapache2-mod-php5
+	* python-pip
 
 2) [Generate SSH keys](https://help.github.com/articles/generating-ssh-keys/) for the user ``proxyvnf`` in order to use the ``Squid-dashboard`` repository. Firstly change to user ``proxyvnf`` 
 	
