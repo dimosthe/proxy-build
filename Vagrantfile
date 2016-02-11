@@ -12,13 +12,13 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/trusty64"
-	config.vm.host_name = "proxy-vnf"
+  config.vm.box = "debian/wheezy64"      
+	config.vm.host_name = "pxaas"
   
 	# VM's specs
 	config.vm.provider "virtualbox" do |v|
-		v.memory = 2048
-		v.cpus = 2
+		v.memory = 1024
+		v.cpus = 1
 	end
 	
 	# Disable automatic box update checking. If you disable this, then
