@@ -49,7 +49,7 @@ Vagrant.configure(2) do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
 
-	# Configure Shared folders. This provisions the VM's /home/george/dashboard folder
+	# Configure Shared folders. This provisions the VM's /home/proxyvnf/dashboard folder
 	# to the host's ./shared folder (relative to current path)
 	config.vm.synced_folder "./shared", "/home/proxyvnf/dashboard",
 		owner: "proxyvnf",
@@ -91,7 +91,7 @@ Vagrant.configure(2) do |config|
   # SHELL
 	
 	
-	# The permissions of the home folder of the user ``controlley`` we created, get messed up after we setup the folder sharing.
+	# The permissions of the home folder of the user ``proxyvnf`` we created, get messed up after we setup the folder sharing.
 	# So I run chown here to reset them
 	config.vm.provision "shell", inline: "sudo chown -R proxyvnf:proxyvnf /home/proxyvnf"
 end

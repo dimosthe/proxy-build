@@ -1,7 +1,9 @@
-# proxy-build
-vagrant configuration file for proxy vnf development environment. 
+# ProXy as a Service (PXaaS) Virtual Network Function 
+Vagrant configuration file for PXaaS vnf development environment for [T-NOVA](http://t-nova.eu/) project.  
 
-It deploys an ubuntu 14.04 server and builds a Squid proxy, SquidGuard and a dashboard on it.
+It deploys an ubuntu 14.04 server and builds a [Squid proxy](http://www.squid-cache.org/), [SquidGuard](http://www.squidguard.org/index.html) and a [Dashboard](https://github.com/dimosthe/Squid-dashboard) on it.
+
+The idea behind PXaaS vnf is to enables a user, who acts as the network administrator of his LAN, to configure the Squid Proxy on demand and provide Proxy services such as web caching, web access control, website filtering and user anonymity to the LAN's users. 
 
 ## Host machine requirements
 
@@ -66,6 +68,7 @@ Once this command finishes, the VM is up and running. Our user is ``vagrant`` an
 	* php5-mysql
 	* php5-imagick
 	* libapache2-mod-php5
+	* python-pip
 
 2) [Generate SSH keys](https://help.github.com/articles/generating-ssh-keys/) for the user ``proxyvnf`` in order to use the ``Squid-dashboard`` repository. Firstly change to user ``proxyvnf`` 
 	
@@ -78,43 +81,48 @@ and follow the instructions above
 	cd /home/proxyvnf/dashboard
 	git clone git@github.com:dimosthe/Squid-dashboard.git
 
-4) Create a new database and a new user and the yii2-user module
+4) Create a new database and a new user
 
 	mysql -u root -p
 	create database dashboarddb
 	create user 'dashboarduser'@'localhost' identified by '12345678';
 	grant all privileges on dashboarddb.* to dashboarduser@localhost;
 	vim config/db.php // edit the file accordingly
-	mkdir migrations // from the root of the application
-	sudo -u proxyvnf -s
-	php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations // in order to build the tables for the yii2-user module
-	./yii createusers/create // from the root of the application. It creates a default user with username:admin, pass:administrator
 
 5) Install Composer
 
 	curl -s http://getcomposer.org/installer | php
 	sudo mv composer.phar /usr/local/bin/composer
 
-6) Run ``composer global require "fxp/composer-asset-plugin:1.0.0-beta3"``. Installs the composer asset plugin which allows managing bower and npm package dependencies through Composer. You only need to run this command once for all.
+6) Run ``composer global require "fxp/composer-asset-plugin:~1.1.0"``. Installs the composer asset plugin which allows managing bower and npm package dependencies through Composer. You only need to run this command once for all.
 
 7) Run ``composer install`` in the root directory of the ``Squid-dashboard`` application in order to install dependencies. This will create the vendor directory with all package dependencies inlcuding the yii core source code.
+
+8) Install Squid 3.5.5 and SquidGuard (see intructions at the end of the page)
+
+9) Install migrations. Run the following commands from the application's root directory
+
+	sudo -u proxyvnf -s
+	php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations // in order to build the tables for the yii2-user module
+	./yii createusers/create // from the root of the application. It creates a default user with username:admin, pass:administrator
+	./yii migrate // to install other migrations
 	
-8) Enable apache rewrite module
+10) Enable apache rewrite module
 	
 	sudo a2enmod rewrite
 	sudo service apache2 restart
 	
-9) Create a symlink to point to the ``Squid-dashboard`` application
+11) Create a symlink to point to the ``Squid-dashboard`` application
 
 	cd /var/www/html
 	sudo ln -s /home/proxyvnf/dashboard/Squid-dashboard/ dashboard
 
-10) Set document root to be ``/var/www/html/dashboard/web``
+12) Set document root to be ``/var/www/html/dashboard/web``
 
 	sudo vim /etc/apache2/sites-available/000-default.conf
 	DocumentRoot "/var/www/html/dashboard/web" 
 
-11) Hide ``index.php`` from the url
+13) Hide ``index.php`` from the url
 
 	sudo vim /etc/apache2/apache2.conf
 	<Directory "/var/www/html/dashboard/web">
@@ -129,14 +137,14 @@ and follow the instructions above
 		# ...other settings...
 	</Directory>
 
-12) Allow apache2 to run sudo without providing password. This is usefull when
+14) Allow apache2 to run sudo without providing password. This is usefull when
 execute commands on Squid via the dashboard
 
 	sudo touch /etc/sudoers.d/www-data
 	sudo vim /etc/sudoers.d/www-data
 	www-data ALL=(ALL) NOPASSWD:ALL // add this line in the file
 
-13) Test the application 
+15) Test the application 
 
 	http://192.168.56.120
 
@@ -193,20 +201,8 @@ Once this command finishes, the VM is up and running. Our user is ``vagrant`` an
 	git clone git@github.com:dimosthe/Squid-dashboard.git
 	cd Squid-dashboard
 	composer install
-	
-9) Create a new database, a new user and install the yii2-user plugin
-	
-	mysql -u root -p
-	create database dashboarddb
-	create user 'dashboarduser'@'localhost' identified by '12345678';
-	grant all privileges on dashboarddb.* to dashboarduser@localhost;
-	vim config/db.php // edit the file accordingly
-	sudo -u proxyvnf -s
-	php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations // in 	order to build the tables for the yii2-user module
-	./yii migrate/up // in order to build any extra migrations
-	./yii createusers/create // from the root of the application. It creates a default user with username:admin, pass:administrator
 
-10) Test the application 
+9) Test the application 
 
 	http://192.168.56.120
 
@@ -234,13 +230,16 @@ We build Squid 3.5.5 from source code
 	--enable-auth-basic=DB,NCSA --enable-cache-digests --disable-arch-native
 
 	make
-	make install
+	sudo make install
 
 3) [Build](https://gist.github.com/e7d/1f784339df82c57a43bf#build-service-runtime) ``service squid start``. 
 
-4) Run
+4) Add ``basic_db_auth`` plugin under /usr/lib/squid3 directory # it is used for authentication
+
+5) Run
 
 	service squid start
+
 
 ## Deploy SquidGuard
 
@@ -248,22 +247,25 @@ We build Squid 3.5.5 from source code
 
 	sudo apt-get install squidguard
 
-2) The problem is that squid3 is also installed when running the above command and starts on start-up. In order to disable the service on sstart-up:
+2) The problem is that squid3 is also installed when running the above command and starts on start-up. In order to disable the service on start-up:
 
-	cd /etc/init/
-	sudo vim squid3.conf
-	comment #start on runlevel [2345]
+	sudo update-rc.d -f  squid3 remove
 	sudo reboot
 
-3) Initializing the blacklists
+3) [Download blacklists](http://urlblacklist.com/?sec=download) 
 
-	sudo squidGuard -C all # convert them from the textfiles to db files
+4) Initializing the blacklists
+
+	sudo squidGuard -C all # convert them from the textfiles to db files. Note that only domains that are defined in the configuration file will be converted
 	sudo chown -R proxy:proxy /etc/squidguard/blacklists/* # ensures that squid is able to access the blacklists
 
-4) Configuring Squid
+5) Configuring Squid
 
 	redirect_program /usr/bin/squidGuard -c /etc/squidguard/squidGuard.conf # at the beginning of squid.conf
 
-## How to migrate a Virtualbox machine to VMware Esxi
+## How to migrate a Virtualbox machine to OpenStack
 
-[link](https://felixcentmerino.wordpress.com/2014/10/15/migrate-virtual-machine-from-oracle-virtualbox-to-esxi-5-5/)
+	# [optional] Convert vmdk to qcow2
+	qemu-img convert -f vmdk -O qcow2 image.vmdk image.qcow2
+	# Unistall VirtualBox GuestAdditions 
+	sudo /opt/[VboxAddonsFolder]/uninstall.sh
